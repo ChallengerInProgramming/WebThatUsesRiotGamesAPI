@@ -4,7 +4,7 @@ const riotKey = 'api_key=RGAPI-239042c3-ff1a-4784-8d53-8d7664ee5343';
 //    let url = "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/High%20Score?api_key=RGAPI-239042c3-ff1a-4784-8d53-8d7664ee5343"
 
 //}
-
+//testing
 const URL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/HighScore?api_key=RGAPI-239042c3-ff1a-4784-8d53-8d7664ee5343';
 
 
