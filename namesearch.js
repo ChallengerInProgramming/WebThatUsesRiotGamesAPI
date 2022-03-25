@@ -16,12 +16,18 @@ const percentTwenty = '%20';
 //placeholder name
 var summonerName = "High Score";
 
-function getValueFromTextBoxFunction(){
+async function getValueFromTextBoxFunction(){
   summonerName = document.getElementById('fname').value;
   let summonerNameComplete = summonerName.replace(/ /g,percentTwenty);
   URL = URL + '/' + summonerNameComplete + '?' + api_key;
   document.getElementById("SummonerNameSearchButton").innerHTML = URL;
   console.log(URL);
+  let response = await fetch(URL);
+  response = await response.json()
+  console.log(response);
+
+
+  URL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name';
 }
 
 // function nameFunction(){
