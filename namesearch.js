@@ -2,21 +2,21 @@
 // Idea seems to be focus on the important differences between yourself and your oponent.
 // Idea is basically like other sites like OPGG or Mobalytics except focus entierley on yourself and the person playign the same role on the other side.
 
-var SummonerURL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name';
+var SummonerURL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/';
 var MatchURL = 'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/';
 var MatchDetailsURL = 'https://americas.api.riotgames.com/lol/match/v5/matches/'
 
-const api_key = 'api_key=RGAPI-0dcab893-2a72-49f2-a18b-82b80b9bb0de';
+const api_key = 'api_key=RGAPI-93df5fc5-0aaa-4c1e-8202-47b9d093aea2';
 // percentTwenty is put in empty spaces between names eg "Tom Kwon" would equal "Tom%20Kwon"
 const percentTwenty = '%20';
 
 //placeholder name
-var summonerName = "High Score";
+var summonerNameVariable = "High Score";
 
 async function getValueFromTextBoxFunction(){
-  summonerName = document.getElementById('fname').value;
-  let summonerNameComplete = summonerName.replace(/ /g,percentTwenty);
-  SummonerURL = SummonerURL + '/' + summonerNameComplete + '?' + api_key;
+  summonerNameVariable = document.getElementById('fname').value;
+  let summonerNameComplete = summonerNameVariable.replace(/ /g,percentTwenty);
+  SummonerURL = SummonerURL + summonerNameComplete + '?' + api_key;
   // document.getElementById("SummonerNameSearchButton").innerHTML = URL;
   //console.log(SummonerURL);
   let response = await fetch(SummonerURL);
@@ -36,23 +36,20 @@ async function getValueFromTextBoxFunction(){
   MatchDetailsURL = MatchDetailsURL + responseMatch[0] + '?' + api_key;
   let responseMatchDetailsURL = await fetch(MatchDetailsURL);
   responseMatchDetailsURL = await responseMatchDetailsURL.json()
-  //document.getElementById("SummonerNameSearchButton").innerHTML = 'Bounty Level = ' + responseMatchDetailsURL.info.participants[0].bountyLevel;
+  //document.getElementById("SummonerNameSearchButton").innerHTML = 'Bounty Level = ' + responseMatchDetailsURL.info.participants[1].bountyLevel;
+  //document.getElementById("SummonerNameSearchButton").innerHTML = responseMatchDetailsURL.info.participants.length;
+  var participantNumber = 0;
+  //document.getElementById("SummonerNameSearchButton").innerHTML = responseMatchDetailsURL.info.participants[1].participantId;
+  for(let i = 0; i < responseMatchDetailsURL.info.participants.length; i++)
+  {
+     if(responseMatchDetailsURL.info.participants[i].summonerName == summonerNameVariable)
+     {
+       participantNumber = responseMatchDetailsURL.info.participants[i].participantId;
+     } 
+  }
+
+  document.getElementById("SummonerNameSearchButton").innerHTML = participantNumber;
 
   // this is to reset the URL so that it does not continually add information and get longer and longer
   SummonerURL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name';
 }
-
-// function nameFunction(){
-
-//     fetch(URL)
-//     .then(res => res.text())
-//     .then(text => {
-//     console.log(text);
-//   })
-//    .catch(err => console.log(err));
-
-//    var nameValue = document.getElementById('fname').value;
-//    document.getElementById("SummonerNameSearchButton").innerHTML = "hi";
-//    //document.getElementById("SummonerNameSearchButton").innerHTML = nameValue;
-// }
-
