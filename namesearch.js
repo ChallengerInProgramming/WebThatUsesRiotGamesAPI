@@ -86,9 +86,49 @@ async function getValueFromTextBoxFunction(){
 
   EnemySummonerName = responseMatchDetailsURL.info.participants[EnemyParticipantNumber - 1].summonerName;
   
+  var SummonerSpentDead = responseMatchDetailsURL.info.participants[participantNumber - 1].totalTimeSpentDead;
+  var EnemySummonerSpentDead = responseMatchDetailsURL.info.participants[EnemyParticipantNumber - 1].totalTimeSpentDead;
 
-  document.getElementById("SummonerNameSearchButton").innerHTML = summonerNameVariable + "<br/> <br/>" 
-  + EnemySummonerName;
+  var SummonerDeathCount = responseMatchDetailsURL.info.participants[participantNumber - 1].deaths;
+  var EnemySummonerDeathCount = responseMatchDetailsURL.info.participants[EnemyParticipantNumber - 1].deaths;
+
+  var SummonerDamageCount = responseMatchDetailsURL.info.participants[participantNumber - 1].totalDamageDealtToChampions;
+  var EnemySummonerDamageCount = responseMatchDetailsURL.info.participants[EnemyParticipantNumber - 1].totalDamageDealtToChampions;
+
+
+  //Determining winners section
+  var SummonerSpentDeadWinner;
+  var SummonerDeathCountWinner;
+  var SummonerDamageCountWinner;
+
+  // Winner is who spent less time dead
+  if(SummonerSpentDead <= EnemySummonerSpentDead){
+    SummonerSpentDeadWinner = summonerNameVariable;
+  }
+  else{
+    SummonerSpentDeadWinner = EnemySummonerName;
+  }
+  // Winner is who died less often
+  if(SummonerDeathCount <= EnemySummonerDeathCount){
+    SummonerDeathCountWinner = summonerNameVariable;
+  }
+  else{
+    SummonerDeathCountWinner = EnemySummonerName;
+  }
+  // Winner is who did more damage
+  if(SummonerDamageCount >= EnemySummonerDamageCount){
+    SummonerDamageCountWinner = summonerName;
+  }
+  else{
+    SummonerDamageCountWinner = EnemySummonerName;
+  }
+
+  document.getElementById("SummonerNameSearchButton").innerHTML = summonerNameVariable + " ::: " + SummonerSpentDead + " seconds spent dead" 
+  + "<br/>" + EnemySummonerName + " ::: " + EnemySummonerSpentDead + " seconds spent dead" + "<br/>" + "=" + SummonerSpentDeadWinner + "<br/> <br/>" + 
+  summonerNameVariable + " ::: " + SummonerDeathCount + " times killed" + "<br/>" + EnemySummonerName + " ::: " + EnemySummonerDeathCount 
+  + " times killed" + "<br/>" + "=" + SummonerDeathCountWinner + "<br/> <br/>" + 
+  summonerNameVariable + " ::: " + SummonerDamageCount + " damage dealt to champions" + "<br/>" + EnemySummonerName + " ::: " + 
+  EnemySummonerDamageCount + " damage dealt to champions" + "<br/>" + "=" + SummonerDamageCountWinner + "<br/> <br/>";
 
   // this is to reset the URL so that it does not continually add information and get longer and longer
   SummonerURL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name';
