@@ -2,11 +2,13 @@
 // Idea seems to be focus on the important differences between yourself and your oponent.
 // Idea is basically like other sites like OPGG or Mobalytics except focus entierley on yourself and the person playign the same role on the other side.
 
+// TODO: get the opposing laners name
+
 var SummonerURL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/';
 var MatchURL = 'https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/';
 var MatchDetailsURL = 'https://americas.api.riotgames.com/lol/match/v5/matches/'
 
-const api_key = 'api_key=RGAPI-93df5fc5-0aaa-4c1e-8202-47b9d093aea2';
+const api_key = 'api_key=RGAPI-7253c065-424a-44a0-a97e-65559ffe67cd';
 // percentTwenty is put in empty spaces between names eg "Tom Kwon" would equal "Tom%20Kwon"
 const percentTwenty = '%20';
 
@@ -39,16 +41,54 @@ async function getValueFromTextBoxFunction(){
   //document.getElementById("SummonerNameSearchButton").innerHTML = 'Bounty Level = ' + responseMatchDetailsURL.info.participants[1].bountyLevel;
   //document.getElementById("SummonerNameSearchButton").innerHTML = responseMatchDetailsURL.info.participants.length;
   var participantNumber = 0;
+  var lane = "hi";
   //document.getElementById("SummonerNameSearchButton").innerHTML = responseMatchDetailsURL.info.participants[1].participantId;
   for(let i = 0; i < responseMatchDetailsURL.info.participants.length; i++)
   {
      if(responseMatchDetailsURL.info.participants[i].summonerName == summonerNameVariable)
      {
        participantNumber = responseMatchDetailsURL.info.participants[i].participantId;
+       lane = responseMatchDetailsURL.info.participants[i].lane;
      } 
   }
 
-  document.getElementById("SummonerNameSearchButton").innerHTML = participantNumber;
+  var EnemyParticipantNumber = 0;
+  if(participantNumber == 1){
+    EnemyParticipantNumber = 6;
+  }
+  else if(participantNumber == 2){
+    EnemyParticipantNumber = 7;
+  }
+  else if(participantNumber == 3){
+    EnemyParticipantNumber = 8;
+  }
+  else if(participantNumber == 4){
+    EnemyParticipantNumber = 9;
+  }
+  else if(participantNumber == 5){
+    EnemyParticipantNumber = 10;
+  }
+  else if(participantNumber == 6){
+    EnemyParticipantNumber = 1;
+  }
+  else if(participantNumber == 7){
+    EnemyParticipantNumber = 2;
+  }
+  else if(participantNumber == 8){
+    EnemyParticipantNumber = 3;
+  }
+  else if(participantNumber == 9){
+    EnemyParticipantNumber = 4;
+  }
+  else if(participantNumber == 10){
+    EnemyParticipantNumber = 5;
+  }
+
+  EnemySummonerName = responseMatchDetailsURL.info.participants[EnemyParticipantNumber - 1].summonerName;
+  
+
+  document.getElementById("SummonerNameSearchButton").innerHTML = summonerNameVariable + "<br/> <br/>" 
+  + EnemySummonerName;
 
   // this is to reset the URL so that it does not continually add information and get longer and longer
   SummonerURL = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name';
